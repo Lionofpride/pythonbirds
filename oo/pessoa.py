@@ -42,3 +42,4 @@ if __name__ == '__main__':
     print(Pessoa.metodo_estatico(), levon.metodo_estatico())
     print(Pessoa.nome_e_atributo_de_classe(), levon.nome_e_atributo_de_classe())
 
+
