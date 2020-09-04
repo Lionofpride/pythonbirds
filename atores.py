@@ -40,6 +40,7 @@ class Ator:
         """
         return self.x, self.y
 
+
     def colidir(self, outro_ator, intervalo=1):
         """
         Método que executa lógica de colisão entre dois atores.
@@ -57,6 +58,8 @@ class Ator:
             delta_y = abs(self.y - outro_ator.y)
             if delta_x <= intervalo and delta_y <= intervalo:
                 self.status = outro_ator.status = DESTRUIDO
+
+
 
 
 class Obstaculo(Ator):
@@ -122,9 +125,10 @@ class Passaro(Ator):
         :param tempo: tempo de jogo a ser calculada a posição
         :return: posição x, y
         """
-        if self.foi_lancado():
+        if self._esta_voando():
             delta_t = tempo - self._tempo_de_lancamento
             self._calcular_posicao_vertical(delta_t)
+            self._calcular_posicao_horizontal(delta_t)
         return super().calcular_posicao(tempo)
 
 
@@ -137,17 +141,24 @@ class Passaro(Ator):
         :param tempo_de_lancamento:
         :return:
         """
-        self._angulo_de_lancamento = angulo
+        self._angulo_de_lancamento = math.radians(angulo)
         self._tempo_de_lancamento = tempo_de_lancamento
-
 
     def _calcular_posicao_vertical(self, delta_t):
         y_atual = self._y_inicial
-        angulo_radianos = math.radians(self._angulo_de_lancamento)
+        angulo_radianos = self._angulo_de_lancamento
         y_atual += self.velocidade_escalar * delta_t * math.sin(angulo_radianos)
         y_atual -= (GRAVIDADE * (delta_t ** 2)) / 2
         self.y = y_atual
 
+    def _calcular_posicao_horizontal(self, delta_t):
+        x_atual = self._x_inicial
+        angulo_radianos = self._angulo_de_lancamento
+        x_atual += self.velocidade_escalar * delta_t * math.cos(angulo_radianos)
+        self.x = x_atual
+
+    def _esta_voando(self):
+        return self.foi_lancado() and self.status == ATIVO
 
 class PassaroAmarelo(Passaro):
     _caracter_ativo = 'A'

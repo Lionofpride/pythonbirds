@@ -8,7 +8,6 @@ project_dir = path.dirname(__file__)
 project_dir = path.join('..')
 sys.path.append(project_dir)
 
-import unittest
 from unittest.case import TestCase
 from atores import Ator, DESTRUIDO, ATIVO, Obstaculo, Porco, PassaroAmarelo, PassaroVermelho
 
@@ -171,7 +170,6 @@ class PassaroBaseTests(TestCase):
     Classe base para teste de passaros.
     Essa classe não contèm nenhum teste, serve apenas para encapsular a lógica de asserção de posição de passaros
     vermelhos e também dos amarelos.
-
     """
 
     def assert_passaro_posicao(self, x_esperado, y_esperado, status_esperado, passaro, tempo):
